@@ -134,6 +134,7 @@ class Timer {
 }
 
 const timerSettings = {time: 10, interval: 1};
+const timerSettings2 = {time: 200, interval: 2};
 
 const timer = new Timer({
     data: timerSettings,
@@ -144,7 +145,7 @@ const timer = new Timer({
 });
 
 const timer2 = new Timer({
-    data: timerSettings,
+    data: timerSettings2,
     className: 'timer2',
     root: document.getElementById('root'),
     autoAttach: true,
