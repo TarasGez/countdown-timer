@@ -1,0 +1,43 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-color: black;
+  min-height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 30px;
+}
+#root div {
+  width: 100%;
+}
+#root div h3 {
+  color: white;
+}
+#root div button {
+  font-size: 1rem;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+#root div button:hover {
+  cursor: pointer;
+}
+#root div .line {
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+  background-color: #eee;
+}
+
+/*# sourceMappingURL=styles.css.map */
