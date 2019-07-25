@@ -56,7 +56,7 @@ class Timer {
     
     
     attach() {
-    	this.root.appendChild(this.elementContainer);
+    	this.root.insertBefore(this.elementContainer, this.root.firstChild);
  
         this.elementContainer.append(this.timeTxt);
         this.elementContainer.append(this.button);
@@ -152,3 +152,28 @@ const timer2 = new Timer({
     autoStart: true
 });
 
+newTimer ();
+function newTimer () {
+    const form = document.getElementById("form");
+
+    form.addEventListener('submit', newTimer);
+
+    function newTimer (ev) {
+        ev.preventDefault();
+        const values = ev.target.getElementsByTagName('input');
+        const time = values[0].value;
+        const interval = values[1].value;
+        const autorun = values[2].checked;
+
+        console.log(autorun);
+
+        const timerNew = new Timer({
+            data: {time, interval},
+            className: `timer${Math.random()}`,
+            root: document.getElementById('root'),
+            autoAttach: true,
+            autoStart: autorun
+        });
+    }
+
+}

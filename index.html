@@ -7,7 +7,27 @@
 </head>
 
 <body>
-<div id="root"></div>
+    <form id="form">
+        <row>
+            <label>Enter time:</label>
+            <input type="number" id="newtime" min="0" max="100" value="100">
+            <span>sec</span>
+        </row>
+        <row>
+            <label>Enter interval:</label>
+            <input type="number" id="newinterval" min="0" max="10" value="1">
+            <span>sec</span>
+        </row>
+        <row>
+            <label>Autorun:</label>
+            <input type="checkbox" id="autorun">
+        </row>
+        <row>
+            <button type="submit" id="button-form">Add new timer</button>
+        </row>
+    </form>
+
+    <div id="root"></div>
 
 <script src="timer.js"></script>
 </body>
