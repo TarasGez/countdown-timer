@@ -32,6 +32,12 @@ body {
 #form span {
   margin-left: 10px;
 }
+#form button, #form input[type=checkbox]:hover {
+  cursor: pointer;
+}
+#form input[type=number] {
+  width: 55px;
+}
 #form input, #form button {
   font-size: 16px;
   padding: 5px 10px;
