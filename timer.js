@@ -16,7 +16,7 @@ class Timer {
         this.timeString = this.timeToString(this.data.time);
         this.time = this.data.time;
         this.interval = this.data.interval;
-        this.lw = 100;
+        // this.lw = 100;
         
         this.buttonTxt = 'Start',
 
@@ -52,8 +52,6 @@ class Timer {
             this.start();
         }
     }
-
-    
     
     attach() {
     	this.root.insertBefore(this.elementContainer, this.root.firstChild);
@@ -66,6 +64,7 @@ class Timer {
     detach() {
     	// remove timer
     }
+ 
 
     initialState() {
         this.min = Math.trunc(this.data.time/60),
@@ -90,21 +89,22 @@ class Timer {
     start() {
         if (!this.running) {
             this.running = !this.running;
-            this.button.innerText = 'Stop';
-            this.line.style.width = `${this.lw}%`;
 
             this.timerId = setInterval(
                 () => {
                     this.time -= this.interval;
                     this.timeString = this.timeToString(this.time);
-                    this.timeTxt.innerText = this.timeString;
 
-                    // Change line
                     if (this.percent > this.interval) {
                         this.percent -= this.interval;
                         this.lw = 100*this.percent/this.data.time;
-                        this.line.style.width = `${this.lw}%`;
-                    }
+                     
+                        this.render(
+                            'Stop',
+                            this.timeString,
+                            this.lw
+                        );
+                    }             
                 }
                 , this.interval*1000);
 
@@ -113,8 +113,11 @@ class Timer {
                     this.pause();
                     clearInterval(this.timerId);
 
-                    this.timeTxt.innerText = this.timeToString(0);   
-                    this.line.style.width = '0%';
+                    this.render(
+                        'Start',
+                        this.timeToString(0),
+                        0
+                    );
                     
                     this.initialState();
                 }
@@ -126,14 +129,25 @@ class Timer {
 
     pause() {
         this.running = !this.running;
-        this.button.innerText = 'Start';
+
+        this.render(
+            'Start',
+            this.timeString,
+            this.lw
+        );
 
         clearInterval(this.timerId);
         clearTimeout(this.timerIdOut);
     }
+
+    render(btnTxt, newTime, newLineWidth) {
+        this.button.innerText = btnTxt;
+        this.timeTxt.innerText = newTime;   
+        this.line.style.width = `${newLineWidth}%`;
+    }
 }
 
-const timerSettings = {time: 10, interval: 1};
+const timerSettings = {time: 10, interval: 3};
 const timerSettings2 = {time: 200, interval: 2};
 
 const timer = new Timer({
@@ -141,7 +155,7 @@ const timer = new Timer({
     className: 'timer',
     root: document.getElementById('root'),
     autoAttach: true,
-    autoStart: false
+    autoStart: true
 });
 
 const timer2 = new Timer({
@@ -152,22 +166,30 @@ const timer2 = new Timer({
     autoStart: true
 });
 
+const timer3 = new Timer({
+    data: {time: 10, interval:3},
+    className: 'timer3',
+    root: document.getElementById('root'),
+    autoAttach: true,
+    autoStart: false
+});
+
 newTimer ();
+
 function newTimer () {
     const form = document.getElementById("form");
 
-    form.addEventListener('submit', newTimer);
+    form.addEventListener('submit', newTimerAdd);
 
-    function newTimer (ev) {
+    function newTimerAdd (ev) {
         ev.preventDefault();
+
         const values = ev.target.getElementsByTagName('input');
-        const time = values[0].value;
-        const interval = values[1].value;
+        const time = Number(values[0].value);
+        const interval = Number(values[1].value);
         const autorun = values[2].checked;
 
-        console.log(autorun);
-
-        const timerNew = new Timer({
+        const timer = new Timer({
             data: {time, interval},
             className: `timer${Math.random()}`,
             root: document.getElementById('root'),
@@ -175,5 +197,4 @@ function newTimer () {
             autoStart: autorun
         });
     }
-
 }
